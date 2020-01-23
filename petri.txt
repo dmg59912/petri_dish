@@ -1,0 +1,33 @@
+Deadline 2/20/2020
+
+ Petri dish
+
+Dr. Smartperson has colonized a group of cells that arrange themselves into
+interesting shapes once they are exposed to a certain type of radiation. These
+cells have all been categorized and arranged in separate jars (indexed by alpha-
+bet letter) based on the shapes that they make. Later on, he plans to test each
+jar separately to make sure that the shapes that the cells form are all correct.
+Obviously, every cell that is in a particular jar should theoretically make the
+same shape as every other cell in that jar.
+
+	A graduate student wanders into the lab and manages to spill every single
+jar into a single petri dish. Dr. Smartperson is not amused.
+
+	He puts the petri dish under the microscrope and sees the various shapes.
+On a large sheet of graph paper, he marks the squares that he sees are occupied
+by a cell. He now needs to reassign letters to the various shapes and designate
+which letter is associated with which square of the graph paper.
+
+	A square is adjacent to another square if it is horizontal, vertical, or diagonal
+from it. You may assume that any cell-lled square that is adjacent to another
+cell-lled square is part of the same shape.
+
+	Your goal will be to identify the shapes, keeping in mind that 90 degree
+rotations and mirror images are to be considered the same shape, and label
+them with lowercase letters. (It is guaranteed that there will be at most 26
+dierent shapes in the petri dish.) In the petri dish, all cell-occupied squares
+are noted with the character *. Your goal will be to replace every * character
+with a character from a to z (lowercase) indicating to which shape it belongs.
+The rst shape should be labeled with a, the second with b, and so on.
+For examples of simple and more complex petri dishes, see the examples.
+1
