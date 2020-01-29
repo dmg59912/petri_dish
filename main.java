@@ -32,39 +32,68 @@ public class main {
 		read.close();
 		
 		////////////////////////////////////// create array
-		int x = row;
-		int y = col;
-		int count_x = 0, count_y = 0;
 		char array[][];   // rows, col
-		array = new char[x][y];
-		
-		read = new Scanner(in);
-		read.useDelimiter("");
-		while( read.hasNextLine())//count_y != y && count_x != x)
-		{ 
-			char ch = read.next().charAt(0);
-			if(ch == ' ')
-			{
-				array[count_x][count_y] = ' ';
-				//System.out.print(array[count_x][count_y]);
-				++count_y;
-			}
-			else if( ch == '*')
-			{
-				array[count_x][count_y] = '*';
-				//System.out.print(array[count_x][count_y]);
-				++count_y;
-			}
-			else if(ch == '\n' )
-			{
-				count_y = 0;
-				++count_x;
-			}
-		}
-		read.close();
-		System.out.println();
-	///////////////////////////////////////////// Print array\\\\\\\\\\\\\\\\\\\\\\\
+		array = new char[row][col];
+		create_array(array );
+
 		printArray(array);
+		
+		write_to_file(array);	
+		
+	}
+	
+	static void write_to_file(char arr[][]) 
+	{
+		FileWriter write;
+		try {
+			write = new FileWriter("out.txt");
+		for( int row = 0;row < arr.length; ++ row)
+		{
+			for(int col = 0; col < arr[row].length;++col)
+				write.write((arr[row][col]));
+			write.write("\n");
+		}
+		
+		write.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	static void create_array( char a[][])
+	{
+		int count_x = 0;
+		int count_y = 0;
+		File in = new File("input.txt");
+		try {
+			Scanner read = new Scanner(in);
+			read.useDelimiter("");
+			
+			while( read.hasNextLine())//count_y != y && count_x != x)
+			{ 
+				char ch = read.next().charAt(0);
+				if(ch == ' ')
+				{
+					a[count_x][count_y] = ' ';
+					//System.out.print(array[count_x][count_y]);
+					++count_y;
+				}
+				else if( ch == '*')
+				{
+					a[count_x][count_y] = '*';
+					//System.out.print(array[count_x][count_y]);
+					++count_y;
+				}
+				else if(ch == '\n' )
+				{
+					count_y = 0;
+					++count_x;
+				}
+			}
+			read.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -81,3 +110,4 @@ public class main {
 	}
 
 }
+
