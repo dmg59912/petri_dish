@@ -7,6 +7,7 @@ public class main {
 	public static void main( String [] args) throws FileNotFoundException
 	{
 		int count = 0;
+		int col = 0;
 		int row = 0;
 		File in = new File("input.txt");
 		
@@ -18,15 +19,23 @@ public class main {
 		{ 
 			char ch = read.next().charAt(0);
 			++count;
-			if(ch == '\n' )
+			if(ch == '\n' && row == 0 )
+			{
 				++row;
-			System.out.print(ch);
+				col = count- 1;
+				//--count;
+			}
+			else if ( ch == '\n')
+			{
+				//--count;
+				++row;
+			}
+			//System.out.print(ch);
 		}
 		
-		int col = count/row;
-		System.out.println("\n\nCount is " + count );
-		System.out.println("They are " + row + " rows");
-		System.out.println("They are  " + col + " colums");
+		//System.out.println("\n\nCount is " + (count) );
+		System.out.println("They are " + (row ) + " rows");
+		System.out.println("They are  " + (col) + " colums");
 		
 		
 		read.close();
@@ -69,7 +78,7 @@ public class main {
 			Scanner read = new Scanner(in);
 			read.useDelimiter("");
 			
-			while( read.hasNextLine())//count_y != y && count_x != x)
+			while( read.hasNextLine() && (count_x <= a.length))//count_y != y && count_x != x)
 			{ 
 				char ch = read.next().charAt(0);
 				if(ch == ' ')
@@ -99,7 +108,7 @@ public class main {
 	
 	static void printArray( char arr[][])
 	{
-		System.out.println("Now printing the array");
+		System.out.println("\nNow printing the array\n");
 		
 		for( int row = 0;row < arr.length; ++ row)
 		{
@@ -110,4 +119,3 @@ public class main {
 	}
 
 }
-
