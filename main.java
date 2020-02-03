@@ -7,7 +7,7 @@ public class main {
 	public static void main( String [] args) throws FileNotFoundException
 	{
 		int count = 0;
-		int col = 0;
+		int col = 0; 
 		int row = 0;
 		File in = new File("input.txt");
 		
@@ -41,16 +41,73 @@ public class main {
 		read.close();
 		
 		////////////////////////////////////// create array
-		char array[][];   // rows, col
+		char array[][]; // rows, col
+		char copy[][];
+		char m_copy[][];
+				
 		array = new char[row][col];
+		copy = new char[row][col];
+		m_copy = new char[row][col];
+		
 		create_array(array );
+		copy_array(array,copy);
 
 		printArray(array);
-		
+		mirror_array(array, m_copy, col);
+		printArray(m_copy);
+		identify_shapes(array,copy);
 		write_to_file(array);	
 		
 	}
+	static void copy_array( char arr[][], char b[][])
+	{
+		for( int row = 0;row < arr.length; ++ row)
+		{
+			for(int col = 0; col < arr[row].length;++col)
+				  b[row][col]= arr[row][col];
+		}	
+	}
 	
+	static void rotate_array( char a[][])
+	{
+		
+	}
+	
+	static void mirror_array(char arr[][], char copy_arr[][],int c )
+	{
+		
+		for( int row = 0;row < arr.length; ++ row)	
+		{
+			for(int col = 0; col < arr[row].length;++col)
+			{
+				copy_arr[row][col] = arr[row][c-1];
+				--c;
+				if(c == 0)
+					c= 25;
+			}
+		}
+	}
+	static void identify_shapes( char arr[][], char copy[][])
+	{
+System.out.println("\nNow printing the array\n");
+		
+		for( int row = 0;row < arr.length; ++ row)
+		{
+			for(int col = 0; col < arr[row].length;++col)
+				System.out.print(arr[row][col]);
+		//System.out.println();
+	
+		/*System.out.println("now identifying shapes");
+		if()
+		else if()
+		else if()
+		else if()
+		else if()
+		else if()
+		else if()
+		else if();*/
+		}
+	}
 	static void write_to_file(char arr[][]) 
 	{
 		FileWriter write;
