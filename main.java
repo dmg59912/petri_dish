@@ -52,10 +52,17 @@ public class main {
 		create_array(array );
 		copy_array(array,copy);
 
+		System.out.println("Printing original array");
 		printArray(array);
+		
+		System.out.println("\nPrinting copy with mirrow image");
 		mirror_array(array, m_copy, col);
 		printArray(m_copy);
+		
+		System.out.println("\nPrinting copy array with values");
 		identify_shapes(array,copy);
+		printArray(copy);
+		
 		write_to_file(array);	
 		
 	}
@@ -89,23 +96,30 @@ public class main {
 	}
 	static void identify_shapes( char arr[][], char copy[][])
 	{
-System.out.println("\nNow printing the array\n");
+		char letter = 97;
+		//System.out.println("\nNow printing the array starting with letter " + letter + "\n");
 		
 		for( int row = 0;row < arr.length; ++ row)
 		{
 			for(int col = 0; col < arr[row].length;++col)
+			{
+				if((col == 0 && row == 0) && arr[0][0] == '*')
+					copy[row][col] = letter;
+				else if( (col - 1) == -1) // not worry abt the row in this case
+				{
+					if (arr[row][col] == '*') // this will check if current is * and will check row -1 
+						if(arr[row -1][col] == '*')
+							copy[row][col] = copy[row -1][col];
+						else//
+							++letter;//
+							
+				}
+				else 
+				{
+		
+				}
 				System.out.print(arr[row][col]);
-		//System.out.println();
-	
-		/*System.out.println("now identifying shapes");
-		if()
-		else if()
-		else if()
-		else if()
-		else if()
-		else if()
-		else if()
-		else if();*/
+			}
 		}
 	}
 	static void write_to_file(char arr[][]) 
