@@ -115,6 +115,8 @@ public class main {
 						{
 							if(arr[0][col - 1] == '*' )
 								copy[0][col] = copy[0][col -1];
+							else if (arr[row + 1][col -1] == '*')
+								copy[0][col] = (char) (letter -1);
 							else
 							{
 								copy[0][col] = letter;
@@ -132,13 +134,15 @@ public class main {
 							if(arr[row-1][col] == '*')
 								copy[row][col] = copy[row -1][col];
 						}
-						else if(arr[row-1][col+1] == '*')// && (col +1) >= arr[row].length )
+						else if(arr[row-1][col+1] == '*')// check top right row
 							copy[row][col] = copy[row-1][col+1];
 					}
 					else
 					{
 						if(arr[row][col] == '*')
-							if(arr[row -1][col-1] == '*')
+							if(arr[row][col -1] == '*') // check behind
+								copy[row][col] = copy[row][col -1]; 
+							else if(arr[row -1][col-1] == '*')
 								copy[row][col] = copy[row-1][col-1];
 							else if (arr[row-1][col] == '*')
 								copy[row][col] = copy[row-1][col];
@@ -146,9 +150,15 @@ public class main {
 								copy[row][col] = copy[row-1][col+1];
 							else if (arr[row][col-1] == '*')
 								copy[row][col] = copy[row][col-1];
+							else if (arr[row + 1][col -1] == '*' && (row +1 ) <= arr.length) // check bottom  left
+								{copy[row][col] = (char) (letter - 1);
+									//++letter;
+								}
+							//else if (arr[row + 1][col] == '*' && (row +1 ) <= arr.length)
+								//copy[row][col] = letter;
 							else
 							{
-								copy[row][col] = letter; //*note need to look behing
+								copy[row][col] = letter; 
 								++letter;
 							}
 					}
