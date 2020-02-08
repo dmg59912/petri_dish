@@ -97,28 +97,63 @@ public class main {
 	static void identify_shapes( char arr[][], char copy[][])
 	{
 		char letter = 97;
-		//System.out.println("\nNow printing the array starting with letter " + letter + "\n");
 		
 		for( int row = 0;row < arr.length; ++ row)
 		{
 			for(int col = 0; col < arr[row].length;++col)
 			{
-				if((col == 0 && row == 0) && arr[0][0] == '*')
-					copy[row][col] = letter;
-				else if( (col - 1) == -1) // not worry abt the row in this case
+				if(row == 0)//checking our first row
 				{
-					if (arr[row][col] == '*') // this will check if current is * and will check row -1 
-						if(arr[row -1][col] == '*')
-							copy[row][col] = copy[row -1][col];
-						else//
-							++letter;//
-							
+					if(arr[0][0] == '*')
+					{
+						copy[0][0] = letter;
+						++letter;
+					}
+					else 
+					{
+						if(arr[0][col] == '*')
+						{
+							if(arr[0][col - 1] == '*' )
+								copy[0][col] = copy[0][col -1];
+							else
+							{
+								copy[0][col] = letter;
+								++letter;
+							}
+						}
+					}
 				}
-				else 
+				else // remaining rows
 				{
-		
+					if((col -1) == -1)
+					{
+						if(arr[row][col] == '*')
+						{
+							if(arr[row-1][col] == '*')
+								copy[row][col] = copy[row -1][col];
+						}
+						else if(arr[row-1][col+1] == '*')// && (col +1) >= arr[row].length )
+							copy[row][col] = copy[row-1][col+1];
+					}
+					else
+					{
+						if(arr[row][col] == '*')
+							if(arr[row -1][col-1] == '*')
+								copy[row][col] = copy[row-1][col-1];
+							else if (arr[row-1][col] == '*')
+								copy[row][col] = copy[row-1][col];
+							else if (arr[row-1][col+1] == '*' && (col +1) <= arr[row].length )
+								copy[row][col] = copy[row-1][col+1];
+							else if (arr[row][col-1] == '*')
+								copy[row][col] = copy[row][col-1];
+							else
+							{
+								copy[row][col] = letter; //*note need to look behing
+								++letter;
+							}
+					}
+				
 				}
-				System.out.print(arr[row][col]);
 			}
 		}
 	}
