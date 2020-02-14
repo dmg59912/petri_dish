@@ -103,8 +103,57 @@ public class main {
 			}
 		}
 	}
+<<<<<<< HEAD
 	
 	static void next_shape( char arr[][], int irow, int icol, char iletter)
+=======
+	static void previous_row_col(char arr[][], int row, int col, char let)
+	{
+		if(row == 0 && col == 0)
+		{
+			if(arr[row + 1][col] == '*')
+			{
+				arr[row +1][col] = let;
+				previous_row_col(arr, row + 1, col, let );
+			}
+			if(arr[row +1][col +1] == '*')
+			{
+				arr[row +1][col + 1] = let;
+				previous_row_col(arr, row + 1, col, let );
+			}
+			if(arr[row][col +1] == '*')
+			{
+				arr[row +1][col] = let;
+				previous_row_col(arr, row + 1, col, let );
+			}
+			else
+				++let;
+		}
+	}
+	
+	static void identify_shape(char arr[][], char copy[][])
+	{
+		char letter = 97;
+		for( int row = 0;row < arr.length; ++ row)
+		{
+			for(int col = 0; col < arr[row].length;++col)
+			{
+				if(arr[0][0] == '*' )
+				{
+					copy[0][0] = letter;
+					previous_row_col(arr, row, col, letter );
+				}
+				else
+				{
+					if( arr[row][col] == '*' )
+						previous_row_col(arr, row, col, letter );
+				}
+			}
+		}
+		
+	}
+	/*static void identify_shapes( char arr[][], char copy[][])
+>>>>>>> 1617011c7c17ef179f5846f757e3d14580aeb6b8
 	{
 		if( (irow -1) == -1 && ( icol + 1) <= arr[irow].length )
 		{
@@ -129,7 +178,12 @@ public class main {
 						point.add( new Point(row,col));
 				}
 			}
+<<<<<<< HEAD
 	}
+=======
+		}
+	}*/
+>>>>>>> 1617011c7c17ef179f5846f757e3d14580aeb6b8
 	static void write_to_file(char arr[][]) 
 	{
 		FileWriter write;
