@@ -2,10 +2,14 @@ package petri_dish;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.Point;
 public class main {
 	
 	public static void main( String [] args) throws FileNotFoundException
 	{
+		ArrayList<Point>  p =  new ArrayList<Point>();
 		int count = 0;
 		int col = 0; 
 		int row = 0;
@@ -18,6 +22,7 @@ public class main {
 		while(read.hasNextLine() )
 		{ 
 			char ch = read.next().charAt(0);
+			
 			++count;
 			if(ch == '\n' && row == 0 )
 			{
@@ -44,6 +49,7 @@ public class main {
 		char array[][]; // rows, col
 		char copy[][];
 		char m_copy[][];
+		char letter = 97;
 				
 		array = new char[row][col];
 		copy = new char[row][col];
@@ -59,8 +65,10 @@ public class main {
 		mirror_array(array, m_copy, col);
 		printArray(m_copy);
 		
+		
 		System.out.println("\nPrinting copy array with values");
-		identify_shapes(array,copy);
+		identify_shapes(copy,p);
+		System.out.println(p);
 		printArray(copy);
 		
 		write_to_file(array);	
@@ -82,6 +90,7 @@ public class main {
 	
 	static void mirror_array(char arr[][], char copy_arr[][],int c )
 	{
+		int initial_size = c;
 		
 		for( int row = 0;row < arr.length; ++ row)	
 		{
@@ -90,82 +99,36 @@ public class main {
 				copy_arr[row][col] = arr[row][c-1];
 				--c;
 				if(c == 0)
-					c= 25;
+					c= initial_size;
 			}
 		}
 	}
-	static void identify_shapes( char arr[][], char copy[][])
+	
+	static void next_shape( char arr[][], int irow, int icol, char iletter)
 	{
-		char letter = 97;
-		
-		for( int row = 0;row < arr.length; ++ row)
+		if( (irow -1) == -1 && ( icol + 1) <= arr[irow].length )
 		{
-			for(int col = 0; col < arr[row].length;++col)
+			
+		}
+		//else if( (icol -1) == -1)
+	//	else if((icol + 1) > arr.length ) 
+		//else if((icol + 1) > arr[irow].length)
+		//else if(icol 
+
+	}
+	static void identify_shapes( char arr[][], ArrayList<Point> point)
+	{
+			char letter = 97;
+			//System.out.println("\nNow printing the array starting with letter " + letter + "\n");
+			
+			for( int row = 0;row < arr.length; ++ row)
 			{
-				if(row == 0)//checking our first row
+				for(int col = 0; col < arr[row].length;++col)
 				{
-					if(arr[0][0] == '*')
-					{
-						copy[0][0] = letter;
-						++letter;
-					}
-					else 
-					{
-						if(arr[0][col] == '*')
-						{
-							if(arr[0][col - 1] == '*' )
-								copy[0][col] = copy[0][col -1];
-							else if (arr[row + 1][col -1] == '*')
-								copy[0][col] = (char) (letter -1);
-							else
-							{
-								copy[0][col] = letter;
-								++letter;
-							}
-						}
-					}
-				}
-				else // remaining rows
-				{
-					if((col -1) == -1)
-					{
-						if(arr[row][col] == '*')
-						{
-							if(arr[row-1][col] == '*')
-								copy[row][col] = copy[row -1][col];
-						}
-						else if(arr[row-1][col+1] == '*')// check top right row
-							copy[row][col] = copy[row-1][col+1];
-					}
-					else
-					{
-						if(arr[row][col] == '*')
-							if(arr[row][col -1] == '*') // check behind
-								copy[row][col] = copy[row][col -1]; 
-							else if(arr[row -1][col-1] == '*')
-								copy[row][col] = copy[row-1][col-1];
-							else if (arr[row-1][col] == '*')
-								copy[row][col] = copy[row-1][col];
-							else if (arr[row-1][col+1] == '*' && (col +1) <= arr[row].length )
-								copy[row][col] = copy[row-1][col+1];
-							else if (arr[row][col-1] == '*')
-								copy[row][col] = copy[row][col-1];
-							else if (arr[row + 1][col -1] == '*' && (row +1 ) <= arr.length) // check bottom  left
-								{copy[row][col] = (char) (letter - 1);
-									//++letter;
-								}
-							//else if (arr[row + 1][col] == '*' && (row +1 ) <= arr.length)
-								//copy[row][col] = letter;
-							else
-							{
-								copy[row][col] = letter; 
-								++letter;
-							}
-					}
-				
+					if(arr[row][col] == '*')
+						point.add( new Point(row,col));
 				}
 			}
-		}
 	}
 	static void write_to_file(char arr[][]) 
 	{
@@ -219,6 +182,11 @@ public class main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	static void check_array(int a,int b)
+	{
 		
 	}
 	
