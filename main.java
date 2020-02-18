@@ -2,17 +2,15 @@ package petri_dish;
 
 import java.io.*;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.Point;
 public class main {
-	
+	static char letter = 97;
+	static int row;
+	static int col;
 	public static void main( String [] args) throws FileNotFoundException
 	{
-		ArrayList<Point>  p =  new ArrayList<Point>();
 		int count = 0;
-		int col = 0; 
-		int row = 0;
+		col = 0; 
+		row = 0;
 		File in = new File("input.txt");
 		
 		Scanner read = new Scanner(in);
@@ -49,8 +47,7 @@ public class main {
 		char array[][]; // rows, col
 		char copy[][];
 		char m_copy[][];
-		char letter = 97;
-				
+		
 		array = new char[row][col];
 		copy = new char[row][col];
 		m_copy = new char[row][col];
@@ -65,14 +62,20 @@ public class main {
 		mirror_array(array, m_copy, col);
 		printArray(m_copy);
 		
+		set_letter(array);
+		System.out.println();
+		printArray(array);
 		
-		System.out.println("\nPrinting copy array with values");
-		identify_shapes(copy,p);
-		System.out.println(p);
-		printArray(copy);
 		
 		write_to_file(array);	
 		
+	}
+	
+	static  boolean is_bound(int irow, int icol, char arr[][], boolean seen[][])
+	{
+	
+		  return ((irow >= 0) && (irow < row) && 
+		           (icol >= 0) && (icol < col) && arr[irow][icol] == '*' && !seen[irow][icol]); 
 	}
 	static void copy_array( char arr[][], char b[][])
 	{
@@ -82,7 +85,33 @@ public class main {
 				  b[row][col]= arr[row][col];
 		}	
 	}
+	static void determine_shape(char arr[][], int irow, int icol, boolean seen[][])
+	{
+		int neighbor_rows [] =  new int [] {-1,-1,-1,0,0,1,1,1};
+		int neighbor_cols [] = new int [] {-1,0,1,-1,1,-1,0,1};
+		
+		seen[irow][icol] = true;
+		arr[irow][icol] = letter;
+		
+		for(int i = 0; i < 8;++i)
+			if(is_bound(irow + neighbor_rows[i], icol + neighbor_cols[i],arr,seen))
+					determine_shape(arr, irow + neighbor_rows[i], icol + neighbor_cols[i],seen );
+		
+	}
 	
+	static void set_letter( char arr[][])
+	{
+		boolean seen[][] = new boolean[row][col];
+		for( int i = 0; i < row; ++i)
+			for(int j = 0; j < col; ++j)
+			{
+				if(arr[i][j] == '*' && !seen[i][j])
+				{
+					determine_shape(arr,i,j,seen);
+					++letter;
+				}
+			}
+	}
 	static void rotate_array( char a[][])
 	{
 		
@@ -103,87 +132,8 @@ public class main {
 			}
 		}
 	}
-<<<<<<< HEAD
 	
-	static void next_shape( char arr[][], int irow, int icol, char iletter)
-=======
-	static void previous_row_col(char arr[][], int row, int col, char let)
-	{
-		if(row == 0 && col == 0)
-		{
-			if(arr[row + 1][col] == '*')
-			{
-				arr[row +1][col] = let;
-				previous_row_col(arr, row + 1, col, let );
-			}
-			if(arr[row +1][col +1] == '*')
-			{
-				arr[row +1][col + 1] = let;
-				previous_row_col(arr, row + 1, col, let );
-			}
-			if(arr[row][col +1] == '*')
-			{
-				arr[row +1][col] = let;
-				previous_row_col(arr, row + 1, col, let );
-			}
-			else
-				++let;
-		}
-	}
 	
-	static void identify_shape(char arr[][], char copy[][])
-	{
-		char letter = 97;
-		for( int row = 0;row < arr.length; ++ row)
-		{
-			for(int col = 0; col < arr[row].length;++col)
-			{
-				if(arr[0][0] == '*' )
-				{
-					copy[0][0] = letter;
-					previous_row_col(arr, row, col, letter );
-				}
-				else
-				{
-					if( arr[row][col] == '*' )
-						previous_row_col(arr, row, col, letter );
-				}
-			}
-		}
-		
-	}
-	/*static void identify_shapes( char arr[][], char copy[][])
->>>>>>> 1617011c7c17ef179f5846f757e3d14580aeb6b8
-	{
-		if( (irow -1) == -1 && ( icol + 1) <= arr[irow].length )
-		{
-			
-		}
-		//else if( (icol -1) == -1)
-	//	else if((icol + 1) > arr.length ) 
-		//else if((icol + 1) > arr[irow].length)
-		//else if(icol 
-
-	}
-	static void identify_shapes( char arr[][], ArrayList<Point> point)
-	{
-			char letter = 97;
-			//System.out.println("\nNow printing the array starting with letter " + letter + "\n");
-			
-			for( int row = 0;row < arr.length; ++ row)
-			{
-				for(int col = 0; col < arr[row].length;++col)
-				{
-					if(arr[row][col] == '*')
-						point.add( new Point(row,col));
-				}
-			}
-<<<<<<< HEAD
-	}
-=======
-		}
-	}*/
->>>>>>> 1617011c7c17ef179f5846f757e3d14580aeb6b8
 	static void write_to_file(char arr[][]) 
 	{
 		FileWriter write;
@@ -239,15 +189,9 @@ public class main {
 		
 	}
 	
-	static void check_array(int a,int b)
-	{
-		
-	}
 	
 	static void printArray( char arr[][])
 	{
-		System.out.println("\nNow printing the array\n");
-		
 		for( int row = 0;row < arr.length; ++ row)
 		{
 			for(int col = 0; col < arr[row].length;++col)
